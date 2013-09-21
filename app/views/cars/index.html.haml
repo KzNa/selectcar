@@ -1,0 +1,93 @@
+
+%style
+  :plain
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+    .table{
+    width: 900px;
+    }
+    #button1{
+    position: relative;
+    left: 347px;
+    }
+    .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+    .form-signin input[type="text"],
+    .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+.container
+  %form.form-signin
+    %h2.form-signin-heading Поиск Авто
+    = search_form_for @search, url: "search", method: :post  do |f|
+ 
+      %p=f.text_field :name_cont, :placeholder=>"Название авто", :class=>"input-block-level"
+ 
+      %p=f.text_field :mark_cont, :placeholder=>"Марка авто", :class=>"input-block-level"
+  
+  
+      %p=f.text_field :price_gteq, :placeholder=>"Минимальная цена", :class=>"input-block-level"
+  
+  
+      %p=f.text_field :price_lteq, :placeholder=>"Максимальная цена", :class=>"input-block-level"
+
+      %p=f.text_field :doorcount_lteq, :placeholder=>"Количество дверей", :class=>"input-block-level"
+      %p=f.text_field :fullspeed_lteq, :placeholder=>"Максимальная скорость", :class=>"input-block-level"
+      %p=f.text_field :horsepower_lteq, :placeholder=>"Кол-во лошадиных сил", :class=>"input-block-level"
+      %p=f.text_field :startofproduction_lteq, :placeholder=>"Начало производства", :class=>"input-block-level"
+  
+      %p=submit_tag "Поиск", :class=>"btn btn-large btn-primary"
+    %button{:class=>"btn btn-large btn-success", :id=>"button1" } Показать найденные авто 
+
+.container{:id=>"avto"} 
+  %h2
+    Список найденных автомобилей 
+  %table{:class=>"table table-hover"}
+    %tr
+      %th Название
+      %th Марка
+     
+      %th Кол-во дверей
+      %th Макс. скорость
+      %th Л.С.
+      %th Цена
+      %th Начало производства
+      
+      %th Тип кузова 
+
+    - @cars.each do |car| 
+      %tr
+        %td=link_to car.name, car_path(car)
+        %td= car.mark
+       
+        %td= car.doorcount
+        %td= car.fullspeed
+        %td= car.horsepower
+       
+        %td= car.price
+        %td= car.startofproduction
+     
+        %td= car.carcass
